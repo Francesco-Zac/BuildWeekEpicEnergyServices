@@ -1,7 +1,7 @@
 package BuildWeekEpicEnergyServices.services;
 
 import BuildWeekEpicEnergyServices.entities.Utente;
-import BuildWeekEpicEnergyServices.repositories.UtentiRepository;
+import BuildWeekEpicEnergyServices.repositories.UtenteRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -9,23 +9,23 @@ import java.util.List;
 
 public class UtentiServices {
 
-    private final UtentiRepository utentiRepository;
+    private final UtenteRepository utenteRepository;
 
-    public UtentiServices(UtentiRepository utentiRepository) {
-        this.utentiRepository = utentiRepository;
+    public UtentiServices(UtenteRepository utenteRepository) {
+        this.utenteRepository = utenteRepository;
     }
 
     public List<Utente> findAll() {
-        return utentiRepository.findAll();
+        return utenteRepository.findAll();
     }
 
     public Utente findById(Long id) {
-        return utentiRepository.findById(id)
+        return utenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public Utente create(Utente utenti) {
-        return utentiRepository.save(utenti);
+    public Utente create(Utente utente) {
+        return utenteRepository.save(utente);
     }
 
     public Utente update(Long id, Utente data) {
@@ -36,11 +36,11 @@ public class UtentiServices {
         existing.setCognome(data.getCognome());
         existing.setAvatar(data.getAvatar());
         existing.setRuoli(data.getRuoli());
-        return utentiRepository.save(existing);
+        return utenteRepository.save(existing);
     }
 
     public void delete(Long id) {
-        utentiRepository.deleteById(id);
+        utenteRepository.deleteById(id);
     }
 
 }

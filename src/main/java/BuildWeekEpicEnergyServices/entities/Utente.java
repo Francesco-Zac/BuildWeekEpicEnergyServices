@@ -34,7 +34,7 @@ public class Utente {
             joinColumns = @JoinColumn(name = "id_utente"),
             inverseJoinColumns = @JoinColumn(name = "id_ruolo")
     )
-    private Set<Ruoli> ruoli = new HashSet<>();
+    private Set<Ruolo> ruolo = new HashSet<>();
 
 
     public Long getId() {
@@ -86,10 +86,10 @@ public class Utente {
         this.avatar = avatar;
     }
 
-    public Set<Ruoli> getRuoli() {
-        return ruoli;
+    public Set<Ruolo> getRuoli() {
+        return ruolo;
     }
-    public void setRuoli(Set<Ruoli> ruoli) {
-        this.ruoli = ruoli;
+    public void setRuoli(Set<Ruolo> ruolo) {
+        this.ruolo = ruolo;
     }
 }
