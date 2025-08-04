@@ -59,6 +59,14 @@ public class Cliente {
     @Enumerated(EnumType.STRING)
     private TipoAzienda tipo;
 
+    @OneToOne
+    @JoinColumn(name = "sede_operativa")
+    private Indirizzo sedeOperativa;
+
+    @OneToOne
+    @JoinColumn(name = "sede_legale")
+    private Indirizzo sedeLegale;
+
     public Cliente(String ragioneSociale, long partitaIva, String email, LocalDate inseritoIl, LocalDate ultimoContattoIl, double fatturatoAnnuo, String pec, String numeroTelefono, String emailContatto, String nomeContatto, String cognomeContatto, String telefonoContatto, String logoAzienda, TipoAzienda tipo) {
         this.ragioneSociale = ragioneSociale;
         this.partitaIva = partitaIva;
