@@ -6,7 +6,7 @@ import java.util.HashSet;
 
 @Entity
 @Table(name = "utenti")
-public class Utenti {
+public class Utente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

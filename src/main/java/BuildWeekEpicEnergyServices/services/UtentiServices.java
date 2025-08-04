@@ -1,6 +1,6 @@
 package BuildWeekEpicEnergyServices.services;
 
-import BuildWeekEpicEnergyServices.entities.Utenti;
+import BuildWeekEpicEnergyServices.entities.Utente;
 import BuildWeekEpicEnergyServices.repositories.UtentiRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,21 +15,21 @@ public class UtentiServices {
         this.utentiRepository = utentiRepository;
     }
 
-    public List<Utenti> findAll() {
+    public List<Utente> findAll() {
         return utentiRepository.findAll();
     }
 
-    public Utenti findById(Long id) {
+    public Utente findById(Long id) {
         return utentiRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public Utenti create(Utenti utenti) {
+    public Utente create(Utente utenti) {
         return utentiRepository.save(utenti);
     }
 
-    public Utenti update(Long id, Utenti data) {
-        Utenti existing = findById(id);
+    public Utente update(Long id, Utente data) {
+        Utente existing = findById(id);
         existing.setUsername(data.getUsername());
         existing.setEmail(data.getEmail());
         existing.setNome(data.getNome());

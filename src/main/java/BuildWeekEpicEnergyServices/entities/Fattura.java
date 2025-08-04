@@ -12,8 +12,6 @@ import java.util.UUID;
 @Table(name = "fatture")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-
 public class Fattura {
     @Id
     @GeneratedValue
