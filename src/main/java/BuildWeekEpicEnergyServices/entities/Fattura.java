@@ -18,9 +18,10 @@ public class Fattura {
     @Id
     @GeneratedValue
     private UUID id;
-
-    @Column(name = "cliente_id", nullable = false)
-    private UUID clienteId;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
+    private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "stato_id", nullable = false)

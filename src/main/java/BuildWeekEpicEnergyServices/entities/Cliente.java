@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "clienti")
@@ -67,6 +69,9 @@ public class Cliente {
     @JoinColumn(name = "sede_legale")
     private Indirizzo sedeLegale;
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Fattura> fatture = new ArrayList<>();
+    
     public Cliente(String ragioneSociale, long partitaIva, String email, LocalDate inseritoIl, LocalDate ultimoContattoIl, double fatturatoAnnuo, String pec, String numeroTelefono, String emailContatto, String nomeContatto, String cognomeContatto, String telefonoContatto, String logoAzienda, TipoAzienda tipo) {
         this.ragioneSociale = ragioneSociale;
         this.partitaIva = partitaIva;
