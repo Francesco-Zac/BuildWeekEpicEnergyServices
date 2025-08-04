@@ -67,7 +67,7 @@ public class Cliente {
     @JoinColumn(name = "sede_legale")
     private Indirizzo sedeLegale;
 
-    public Cliente(String ragioneSociale, long partitaIva, String email, LocalDate inseritoIl, LocalDate ultimoContattoIl, double fatturatoAnnuo, String pec, String numeroTelefono, String emailContatto, String nomeContatto, String cognomeContatto, String telefonoContatto, String logoAzienda, TipoAzienda tipo) {
+    public Cliente(String ragioneSociale, long partitaIva, String email, LocalDate inseritoIl, LocalDate ultimoContattoIl, double fatturatoAnnuo, String pec, String numeroTelefono, String emailContatto, String nomeContatto, String cognomeContatto, String telefonoContatto, String logoAzienda, TipoAzienda tipo, Indirizzo sedeOperativa, Indirizzo sedeLegale) {
         this.ragioneSociale = ragioneSociale;
         this.partitaIva = partitaIva;
         this.email = email;
@@ -82,6 +82,8 @@ public class Cliente {
         this.telefonoContatto = telefonoContatto;
         this.logoAzienda = logoAzienda;
         this.tipo = tipo;
+        this.sedeOperativa = sedeOperativa;
+        this.sedeLegale = sedeLegale;
     }
 }
 
