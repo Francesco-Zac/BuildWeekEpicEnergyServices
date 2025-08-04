@@ -2,6 +2,7 @@ package BuildWeekEpicEnergyServices.services;
 
 import BuildWeekEpicEnergyServices.entities.Comune;
 import BuildWeekEpicEnergyServices.entities.Provincia;
+import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekEpicEnergyServices.repositories.ComuneRepository;
 import BuildWeekEpicEnergyServices.repositories.ProvinciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,22 @@ public class ComuneImporter {
                 else if (nomeProvinciaOriginale.equalsIgnoreCase("La Spezia")) {
                     nomeProvincia = "La-Spezia";
                 }
-
-
+                else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio nell'Emilia")) {
+                    nomeProvincia = "Reggio-Emilia";
+                }
+                else if (nomeProvinciaOriginale.equalsIgnoreCase("Forlì-Cesena")) {
+                    nomeProvincia = "Forli-Cesena";
+                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Pesaro e Urbino")) {
+                    nomeProvincia = "Pesaro-Urbino";
+                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Ascoli Piceno")) {
+                    nomeProvincia = "Ascoli-Piceno";
+                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio Calabria")) {
+                    nomeProvincia = "Reggio-Calabria";
+                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Vibo Valentia")) {
+                    nomeProvincia = "Vibo-Valentia";
+                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Sud Sardegna")) {
+                    nomeProvincia = "Vibo-Valentia";
+                }
                 else {
                     nomeProvincia = nomeProvinciaOriginale;
                 }
@@ -58,7 +73,7 @@ public class ComuneImporter {
 
 
                 Provincia provincia = provinciaRepository.findByProvincia(nomeProvincia)
-                        .orElseThrow(() -> new RuntimeException("Provincia non trovata: " + nomeProvincia));
+                        .orElseThrow(() -> new NotFoundException("Provincia non trovata: " + nomeProvincia));
 
                 Comune comune = new Comune();
                 comune.setCodiceProvincia(record.get(0));

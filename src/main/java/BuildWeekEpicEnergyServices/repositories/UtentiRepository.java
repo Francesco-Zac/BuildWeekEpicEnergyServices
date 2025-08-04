@@ -1,6 +1,6 @@
 package BuildWeekEpicEnergyServices.repositories;
 
-import BuildWeekEpicEnergyServices.entities.Utenti;
+import BuildWeekEpicEnergyServices.models.Utenti;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

@@ -2,10 +2,7 @@ package BuildWeekEpicEnergyServices.entities;
 
 import BuildWeekEpicEnergyServices.enums.TipoAzienda;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -19,6 +16,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @Column(name = "ragione_sociale", nullable = false)
@@ -60,6 +58,14 @@ public class Cliente {
 
     @Enumerated(EnumType.STRING)
     private TipoAzienda tipo;
+
+    @OneToOne
+    @JoinColumn(name = "sede_operativa")
+    private Indirizzo sedeOperativa;
+
+    @OneToOne
+    @JoinColumn(name = "sede_legale")
+    private Indirizzo sedeLegale;
 
     public Cliente(String ragioneSociale, long partitaIva, String email, LocalDate inseritoIl, LocalDate ultimoContattoIl, double fatturatoAnnuo, String pec, String numeroTelefono, String emailContatto, String nomeContatto, String cognomeContatto, String telefonoContatto, String logoAzienda, TipoAzienda tipo) {
         this.ragioneSociale = ragioneSociale;
