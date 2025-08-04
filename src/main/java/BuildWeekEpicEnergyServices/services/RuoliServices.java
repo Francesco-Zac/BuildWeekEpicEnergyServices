@@ -1,38 +1,38 @@
 package BuildWeekEpicEnergyServices.services;
 
-import BuildWeekEpicEnergyServices.entities.Ruoli;
-import BuildWeekEpicEnergyServices.repositories.RuoliRepository;
+import BuildWeekEpicEnergyServices.entities.Ruolo;
+import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class RuoliServices {
-    private final RuoliRepository ruoliRepository;
+    private final RuoloRepository ruoloRepository;
 
-    public RuoliServices(RuoliRepository ruoliRepository) {
-        this.ruoliRepository = ruoliRepository;
+    public RuoliServices(RuoloRepository ruoloRepository) {
+        this.ruoloRepository = ruoloRepository;
     }
 
-    public List<Ruoli> findAll() {
-        return ruoliRepository.findAll();
+    public List<Ruolo> findAll() {
+        return ruoloRepository.findAll();
     }
 
-    public Ruoli findById(Long id) {
-        return ruoliRepository.findById(id)
+    public Ruolo findById(Long id) {
+        return ruoloRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ruolo non trovato"));
     }
 
-    public Ruoli create(Ruoli ruolo) {
-        return ruoliRepository.save(ruolo);
+    public Ruolo create(Ruolo ruolo) {
+        return ruoloRepository.save(ruolo);
     }
 
-    public Ruoli update(Long id, Ruoli data) {
-        Ruoli existing = findById(id);
+    public Ruolo update(Long id, Ruolo data) {
+        Ruolo existing = findById(id);
         existing.setName(data.getName());  // Lombok ha generato setName/getName su `name`
-        return ruoliRepository.save(existing);
+        return ruoloRepository.save(existing);
     }
 
     public void delete(Long id) {
-        ruoliRepository.deleteById(id);
+        ruoloRepository.deleteById(id);
     }
 }

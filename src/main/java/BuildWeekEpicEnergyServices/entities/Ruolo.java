@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Ruoli {
+public class Ruolo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
