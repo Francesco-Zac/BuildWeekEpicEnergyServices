@@ -2,10 +2,7 @@ package BuildWeekEpicEnergyServices.entities;
 
 import BuildWeekEpicEnergyServices.enums.TipoAzienda;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -19,6 +16,7 @@ public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private long id;
 
     @Column(name = "ragione_sociale", nullable = false)
