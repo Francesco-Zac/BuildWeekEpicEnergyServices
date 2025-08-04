@@ -1,6 +1,6 @@
 package BuildWeekEpicEnergyServices.controllers;
 
-import BuildWeekEpicEnergyServices.models.Ruoli;
+import BuildWeekEpicEnergyServices.entities.Ruoli;
 import BuildWeekEpicEnergyServices.services.RuoliServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

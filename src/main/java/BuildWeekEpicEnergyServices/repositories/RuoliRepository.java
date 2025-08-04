@@ -1,7 +1,7 @@
 package BuildWeekEpicEnergyServices.repositories;
 
 
-import BuildWeekEpicEnergyServices.models.Ruoli;
+import BuildWeekEpicEnergyServices.entities.Ruoli;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 

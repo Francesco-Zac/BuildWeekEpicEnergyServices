@@ -1,6 +1,6 @@
 package BuildWeekEpicEnergyServices.services;
 
-import BuildWeekEpicEnergyServices.models.Ruoli;
+import BuildWeekEpicEnergyServices.entities.Ruoli;
 import BuildWeekEpicEnergyServices.repositories.RuoliRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
