@@ -1,7 +1,7 @@
 package BuildWeekEpicEnergyServices.services;
 
-import BuildWeekEpicEnergyServices.entities.Utenti;
-import BuildWeekEpicEnergyServices.repositories.UtentiRepository;
+import BuildWeekEpicEnergyServices.entities.Utente;
+import BuildWeekEpicEnergyServices.repositories.UtenteRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -9,38 +9,38 @@ import java.util.List;
 
 public class UtentiServices {
 
-    private final UtentiRepository utentiRepository;
+    private final UtenteRepository utenteRepository;
 
-    public UtentiServices(UtentiRepository utentiRepository) {
-        this.utentiRepository = utentiRepository;
+    public UtentiServices(UtenteRepository utenteRepository) {
+        this.utenteRepository = utenteRepository;
     }
 
-    public List<Utenti> findAll() {
-        return utentiRepository.findAll();
+    public List<Utente> findAll() {
+        return utenteRepository.findAll();
     }
 
-    public Utenti findById(Long id) {
-        return utentiRepository.findById(id)
+    public Utente findById(Long id) {
+        return utenteRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public Utenti create(Utenti utenti) {
-        return utentiRepository.save(utenti);
+    public Utente create(Utente utente) {
+        return utenteRepository.save(utente);
     }
 
-    public Utenti update(Long id, Utenti data) {
-        Utenti existing = findById(id);
+    public Utente update(Long id, Utente data) {
+        Utente existing = findById(id);
         existing.setUsername(data.getUsername());
         existing.setEmail(data.getEmail());
         existing.setNome(data.getNome());
         existing.setCognome(data.getCognome());
         existing.setAvatar(data.getAvatar());
         existing.setRuoli(data.getRuoli());
-        return utentiRepository.save(existing);
+        return utenteRepository.save(existing);
     }
 
     public void delete(Long id) {
-        utentiRepository.deleteById(id);
+        utenteRepository.deleteById(id);
     }
 
 }
