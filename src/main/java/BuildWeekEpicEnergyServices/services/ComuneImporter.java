@@ -2,6 +2,7 @@ package BuildWeekEpicEnergyServices.services;
 
 import BuildWeekEpicEnergyServices.entities.Comune;
 import BuildWeekEpicEnergyServices.entities.Provincia;
+import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekEpicEnergyServices.repositories.ComuneRepository;
 import BuildWeekEpicEnergyServices.repositories.ProvinciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,6 @@ public class ComuneImporter {
                 else if (nomeProvinciaOriginale.equalsIgnoreCase("La Spezia")) {
                     nomeProvincia = "La-Spezia";
                 }
-
-
                 else {
                     nomeProvincia = nomeProvinciaOriginale;
                 }
@@ -58,7 +57,7 @@ public class ComuneImporter {
 
 
                 Provincia provincia = provinciaRepository.findByProvincia(nomeProvincia)
-                        .orElseThrow(() -> new RuntimeException("Provincia non trovata: " + nomeProvincia));
+                        .orElseThrow(() -> new NotFoundException("Provincia non trovata: " + nomeProvincia));
 
                 Comune comune = new Comune();
                 comune.setCodiceProvincia(record.get(0));
