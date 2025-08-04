@@ -1,4 +1,4 @@
-package BuildWeekEpicEnergyServices.payload;
+package BuildWeekEpicEnergyServices.payloads;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
