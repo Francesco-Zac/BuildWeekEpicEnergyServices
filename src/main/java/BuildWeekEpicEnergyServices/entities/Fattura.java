@@ -1,4 +1,4 @@
-package BuildWeekEpicEnergyServices;
+package BuildWeekEpicEnergyServices.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,8 +22,9 @@ public class Fattura {
     @Column(name = "cliente_id", nullable = false)
     private UUID clienteId;
 
-    @Column(name = "stato_id", nullable = false)
-    private UUID statoId;
+    @ManyToOne
+    @JoinColumn(name = "stato_id", nullable = false)
+    private StatoFattura statoFattura;
 
     @Column(nullable = false)
     private LocalDate data;
