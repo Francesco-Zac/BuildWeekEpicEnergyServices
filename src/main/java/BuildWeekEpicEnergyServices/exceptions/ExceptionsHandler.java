@@ -60,10 +60,4 @@ public class ExceptionsHandler {
         );
     }
 
-    @ExceptionHandler(NoBookingsFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorsDTO handleNoBookings(NoBookingsFoundException ex) {
-        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
-    }
-
 }
