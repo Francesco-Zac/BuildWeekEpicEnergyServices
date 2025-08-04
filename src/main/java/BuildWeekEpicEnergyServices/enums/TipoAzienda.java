@@ -1,5 +1,5 @@
 package BuildWeekEpicEnergyServices.enums;
 
-public enum CompanyType {
+public enum TipoAzienda {
     SAS, SPA, SRL, PA
 }

@@ -41,21 +41,21 @@ public class ExceptionsHandler {
     @ExceptionHandler(AuthorizationDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN) // 403
     public ErrorsDTO handleForbidden(AuthorizationDeniedException ex) {
-        return new ErrorsDTO("No permission to log in", LocalDateTime.now());
+        return new ErrorsDTO("Non hai i permessi per loggare!", LocalDateTime.now());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
     public ErrorsDTO handleServerError(Exception ex) {
         ex.printStackTrace();
-        return new ErrorsDTO("An error occurred", LocalDateTime.now());
+        return new ErrorsDTO("Errore generico! Ci stiamo lavorando", LocalDateTime.now());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsDTO handleBadEnum(HttpMessageNotReadableException ex) {
         return new ErrorsDTO(
-                "Invalid format or wrong enum value (Company type allowed options: 'PA', 'SPA', 'SRL', 'SAS')",
+                "Tipo di azienda non valido! Inserisci uno tra questi: 'PA', 'SPA', 'SRL', 'SAS ",
                 LocalDateTime.now()
         );
     }
