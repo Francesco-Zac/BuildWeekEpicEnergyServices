@@ -27,6 +27,6 @@ public class StatoFattura {
     @Column(nullable = false)
     private String descrizione;
 
-    @OneToMany(mappedBy = "statoFatture", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "statoFattura")
     private List<Fattura> fatture;
 }
