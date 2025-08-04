@@ -1,6 +1,6 @@
 package BuildWeekEpicEnergyServices.services;
 
-import BuildWeekEpicEnergyServices.models.Utenti;
+import BuildWeekEpicEnergyServices.entities.Utenti;
 import BuildWeekEpicEnergyServices.repositories.UtentiRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
