@@ -22,8 +22,9 @@ public class Comune {
     @Column(name = "denominazione_comune")
     private String denominazioneComune;
 
-    @Column(name = "provincia")
-    private String provincia;
+    @ManyToOne
+    @JoinColumn(name = "sigla_provincia", referencedColumnName = "sigla")
+    private Provincia provincia;
 
 
 }
