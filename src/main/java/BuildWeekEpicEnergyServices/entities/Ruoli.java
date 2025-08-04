@@ -1,4 +1,4 @@
-package BuildWeekEpicEnergyServices.models;
+package BuildWeekEpicEnergyServices.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
