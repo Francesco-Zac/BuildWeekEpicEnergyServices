@@ -3,6 +3,7 @@ package BuildWeekEpicEnergyServices.runners;
 import BuildWeekEpicEnergyServices.services.ComuneImporter;
 import BuildWeekEpicEnergyServices.services.ProvinciaImporter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +16,13 @@ public class CsvRunner implements CommandLineRunner {
     @Autowired
     private ProvinciaImporter provinciaImporter;
 
+    @Value("${path.comuni}")
+    private String pathComuni;
+    @Value("${path.province}")
+    private String pathProvince;
     @Override
     public void run(String... args) throws Exception {
-        comuneImporter.importaDaCsv("D:/Epicode/comuni/comuni-italiani.csv");
-        provinciaImporter.importaDaCsv("D:/Epicode/province/province-italiane.csv");
+        comuneImporter.importaDaCsv(pathComuni);
+        provinciaImporter.importaDaCsv(pathProvince);
     }
 }
