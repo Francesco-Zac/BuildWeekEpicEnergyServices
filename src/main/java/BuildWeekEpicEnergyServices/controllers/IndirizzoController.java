@@ -1,10 +1,15 @@
 package BuildWeekEpicEnergyServices.controllers;
 
 import BuildWeekEpicEnergyServices.entities.Indirizzo;
+import BuildWeekEpicEnergyServices.exceptions.ValidationException;
+import BuildWeekEpicEnergyServices.payloads.IndirizzoDTO;
 import BuildWeekEpicEnergyServices.services.IndirizzoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +47,20 @@ public class IndirizzoController {
     public Indirizzo create(@RequestBody Indirizzo indirizzo) {
         return indirizzoService.save(indirizzo);
     }
+
+//    @PostMapping()
+//    @ResponseStatus(HttpStatus.CREATED)
+
+//    public NewUserRespDTO save(@RequestBody @Validated NewUserDTO payload, BindingResult validationResult) {
+//        if (validationResult.hasErrors()) {
+//            //validationResult.getFieldErrors().forEach(fieldError -> System.out.println(fieldError.getDefaultMessage()));
+//            throw new ValidationException(validationResult.getFieldErrors()
+//                    .stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
+//        } else {
+//            User newUser = this.usersService.save(payload);
+//            return new NewUserRespDTO(newUser.getId());
+//        }
+//    }
 
     @PutMapping("/{id}")
     public Indirizzo update(@PathVariable Long id, @RequestBody Indirizzo indirizzo) {

@@ -29,10 +29,17 @@ public class ComuneImporter {
                 Reader reader = new FileReader(percorsoCsv);
                 CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT
                         .withDelimiter(';')
-                        .withFirstRecordAsHeader()
-                        .withTrim());
+                        .withTrim()
+                        .withSkipHeaderRecord()
+                );
         ) {
+            boolean isFirstRow = true;
             for (CSVRecord record : csvParser) {
+                if (isFirstRow) {
+                    isFirstRow = false;
+                    continue;
+                }
+
                 String nomeProvinciaOriginale = record.get(3).trim();
 
                 final String nomeProvincia;
@@ -43,34 +50,27 @@ public class ComuneImporter {
                     nomeProvincia = "Aosta";
                 }  else if (nomeProvinciaOriginale.equalsIgnoreCase("Monza e della Brianza")) {
                     nomeProvincia = "Monza-Brianza";
-                }
-                else if (nomeProvinciaOriginale.equalsIgnoreCase("Bolzano/Bozen")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Bolzano/Bozen")) {
                     nomeProvincia = "Bolzano";
-                }
-                else if (nomeProvinciaOriginale.equalsIgnoreCase("La Spezia")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("La Spezia")) {
                     nomeProvincia = "La-Spezia";
-                }
-                else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio nell'Emilia")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio nell'Emilia")) {
                     nomeProvincia = "Reggio-Emilia";
-                }
-                else if (nomeProvinciaOriginale.equalsIgnoreCase("Forlì-Cesena")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Forlì-Cesena")) {
                     nomeProvincia = "Forli-Cesena";
-                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Pesaro e Urbino")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Pesaro e Urbino")) {
                     nomeProvincia = "Pesaro-Urbino";
-                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Ascoli Piceno")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Ascoli Piceno")) {
                     nomeProvincia = "Ascoli-Piceno";
-                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio Calabria")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio Calabria")) {
                     nomeProvincia = "Reggio-Calabria";
-                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Vibo Valentia")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Vibo Valentia")) {
                     nomeProvincia = "Vibo-Valentia";
-                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Sud Sardegna")) {
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Sud Sardegna")) {
                     nomeProvincia = "Vibo-Valentia";
-                }
-                else {
+                } else {
                     nomeProvincia = nomeProvinciaOriginale;
                 }
-
-
 
                 Provincia provincia = provinciaRepository.findByProvincia(nomeProvincia)
                         .orElseThrow(() -> new NotFoundException("Provincia non trovata: " + nomeProvincia));
