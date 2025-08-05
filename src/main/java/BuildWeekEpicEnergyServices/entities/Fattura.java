@@ -1,9 +1,7 @@
 package BuildWeekEpicEnergyServices.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -16,9 +14,10 @@ import java.util.UUID;
 
 public class Fattura {
     @Id
-    @GeneratedValue
-    private UUID id;
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private long id;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
