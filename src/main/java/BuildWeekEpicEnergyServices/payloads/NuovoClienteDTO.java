@@ -1,5 +1,6 @@
 package BuildWeekEpicEnergyServices.payloads;
 
+import BuildWeekEpicEnergyServices.enums.TipoAzienda;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -44,7 +45,7 @@ public record NuovoClienteDTO(
         String logoAzienda,
 
         @NotBlank(message = "Il tipo di azienda è obbligatorio")
-        String tipoAzienda,
+        TipoAzienda tipoAzienda,
 
         @NotNull(message = "L'indirizzo della sede operativa è obbligatorio")
         IndirizzoDTO sedeOperativa,
