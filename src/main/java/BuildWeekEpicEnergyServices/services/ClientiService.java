@@ -192,5 +192,21 @@ public class ClientiService {
         Pageable pageable = PageRequest.of(page, size);
         return clienteRepository.findAllOrderByProvinciaSedeLegaleDesc(pageable);
     }
+    
+    public Page<Cliente> getClientiByNomeContatto(String nomeContatto, int page, int size) {
+        return clienteRepository.findByNomeContattoContainingIgnoreCase(nomeContatto, PageRequest.of(page, size));
+    }
+
+    public Page<Cliente> getClientiByMinFatturato(double minFatturato, int page, int size) {
+        return clienteRepository.findByFatturatoAnnuoGreaterThanEqual(minFatturato, PageRequest.of(page, size));
+    }
+
+    public Page<Cliente> getClientiInseritiDopo(LocalDate data, int page, int size) {
+        return clienteRepository.findByInseritoIlAfter(data, PageRequest.of(page, size));
+    }
+
+    public Page<Cliente> getClientiContattatiPrimaDi(LocalDate data, int page, int size) {
+        return clienteRepository.findByUltimoContattoIlBefore(data, PageRequest.of(page, size));
+    }
 
 }

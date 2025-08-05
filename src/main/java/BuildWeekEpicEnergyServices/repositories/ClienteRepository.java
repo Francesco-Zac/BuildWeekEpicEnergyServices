@@ -17,13 +17,12 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com JOIN com.provincia p ORDER BY p.provincia DESC")
     Page<Cliente> findAllOrderByProvinciaSedeLegaleDesc(Pageable pageable);
 
-    List<Cliente> findByNomeContattoContainingIgnoreCase(String nomeContatto);
+    Page<Cliente> findByNomeContattoContainingIgnoreCase(String nomeContatto, Pageable pageable);
 
-    List<Cliente> findByFatturatoAnnuo(double fatturatoAnnuo);
+    Page<Cliente> findByFatturatoAnnuoGreaterThanEqual(double minFatturato, Pageable pageable);
 
-    List<Cliente> findByInseritoIl(LocalDate inseritoIl);
+    Page<Cliente> findByInseritoIlAfter(LocalDate data, Pageable pageable);
 
-    List<Cliente> findByUltimoContattoIl(LocalDate ultimoContattoIl);
-
+    Page<Cliente> findByUltimoContattoIlBefore(LocalDate data, Pageable pageable);
 
 }
