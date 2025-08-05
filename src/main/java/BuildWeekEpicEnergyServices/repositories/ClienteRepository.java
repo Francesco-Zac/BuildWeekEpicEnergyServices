@@ -7,11 +7,23 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Pageable;
 
 
+import java.time.LocalDate;
+import java.util.List;
+
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com JOIN com.provincia p ORDER BY p.provincia ASC")
     Page<Cliente> findAllOrderByProvinciaSedeLegale(Pageable pageable);
 
     @Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com JOIN com.provincia p ORDER BY p.provincia DESC")
     Page<Cliente> findAllOrderByProvinciaSedeLegaleDesc(Pageable pageable);
+
+    List<Cliente> findByNomeContattoContainingIgnoreCase(String nomeContatto);
+
+    List<Cliente> findByFatturatoAnnuo(double fatturatoAnnuo);
+
+    List<Cliente> findByInseritoIl(LocalDate inseritoIl);
+
+    List<Cliente> findByUltimoContattoIl(LocalDate ultimoContattoIl);
+
 
 }
