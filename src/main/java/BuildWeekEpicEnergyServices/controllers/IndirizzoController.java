@@ -3,6 +3,7 @@ package BuildWeekEpicEnergyServices.controllers;
 import BuildWeekEpicEnergyServices.entities.Indirizzo;
 import BuildWeekEpicEnergyServices.exceptions.ValidationException;
 import BuildWeekEpicEnergyServices.payloads.IndirizzoDTO;
+import BuildWeekEpicEnergyServices.payloads.NewIndirizzoResp;
 import BuildWeekEpicEnergyServices.services.IndirizzoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -43,28 +44,26 @@ public class IndirizzoController {
         return indirizzoService.findById(id);
     }
 
-    @PostMapping
-    public Indirizzo create(@RequestBody Indirizzo indirizzo) {
-        return indirizzoService.save(indirizzo);
+
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public NewIndirizzoResp save(@RequestBody @Validated IndirizzoDTO payload, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(
+                    validationResult.getFieldErrors()
+                            .stream()
+                            .map(fieldError -> fieldError.getDefaultMessage())
+                            .toList()
+            );
+        } else {
+            Indirizzo newIndirizzo = this.indirizzoService.save(payload);
+            return new NewIndirizzoResp(newIndirizzo.getId());
+        }
     }
 
-//    @PostMapping()
-//    @ResponseStatus(HttpStatus.CREATED)
-
-//    public NewUserRespDTO save(@RequestBody @Validated NewUserDTO payload, BindingResult validationResult) {
-//        if (validationResult.hasErrors()) {
-//            //validationResult.getFieldErrors().forEach(fieldError -> System.out.println(fieldError.getDefaultMessage()));
-//            throw new ValidationException(validationResult.getFieldErrors()
-//                    .stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
-//        } else {
-//            User newUser = this.usersService.save(payload);
-//            return new NewUserRespDTO(newUser.getId());
-//        }
-//    }
-
     @PutMapping("/{id}")
-    public Indirizzo update(@PathVariable Long id, @RequestBody Indirizzo indirizzo) {
-        return indirizzoService.update(id, indirizzo);
+    public Indirizzo update(@PathVariable Long id, @RequestBody IndirizzoDTO indirizzoDTO) {
+        return indirizzoService.update(id, indirizzoDTO);
     }
 
     @DeleteMapping("/{id}")
