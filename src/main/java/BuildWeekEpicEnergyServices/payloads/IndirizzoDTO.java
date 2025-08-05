@@ -1,12 +1,13 @@
 package BuildWeekEpicEnergyServices.payloads;
 
+import BuildWeekEpicEnergyServices.entities.Comune;
 import BuildWeekEpicEnergyServices.enums.TipoSede;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record IndirizzoDTO(
-        @NotBlank(message = "l'Id è obbligatorio!")
+        @NotNull(message = "l'Id è obbligatorio!")
         Long id,
         @NotBlank(message = "La via è obbligatoria!")
         String via,
@@ -16,7 +17,7 @@ public record IndirizzoDTO(
         int cap,
         @NotBlank(message = "Il tipo di sede è obbligatorio!")
         TipoSede tipoSede,
-        @NotBlank(message = "Il comune è obbligatorio!")
+        @NotNull(message = "Il comune è obbligatorio!")
         Long comuneId
 ) {
 }
