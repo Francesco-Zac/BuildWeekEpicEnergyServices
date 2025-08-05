@@ -1,7 +1,7 @@
 package BuildWeekEpicEnergyServices.repositories;
 
-import BuildWeekEpicEnergyServices.entities.Comune;
+import BuildWeekEpicEnergyServices.entities.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ClienteRepository extends JpaRepository<Comune, Long> {
+public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 }
