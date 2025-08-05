@@ -1,12 +1,18 @@
 package BuildWeekEpicEnergyServices.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
 @Entity
 @Table(name = "utenti")
-public class Utente {
+public class Utente implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,6 +42,12 @@ public class Utente {
     )
     private Set<Ruolo> ruolo = new HashSet<>();
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return ruolo.stream()
+                .map(r -> new SimpleGrantedAuthority(r.getName()))
+                .toList();
+    }
 
     public Long getId() {
         return id;
