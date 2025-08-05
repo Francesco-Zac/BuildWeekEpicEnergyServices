@@ -3,5 +3,5 @@ package BuildWeekEpicEnergyServices.payloads;
 import jakarta.validation.constraints.NotBlank;
 
 public record RuoloDTO (
-        @NotBlank String name
+        @NotBlank (message = "Il nome è obbligatorio") String name
 ){}
