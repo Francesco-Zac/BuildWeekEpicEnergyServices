@@ -28,6 +28,12 @@ public class CsvRunner implements CommandLineRunner {
     private String pathProvince;
     @Override
     public void run(String... args) throws Exception {
+        if (provinciaRepository.count() == 0) {
+            provinciaImporter.importaDaCsv(pathProvince);
+            System.out.println("Importazione province completata.");
+        } else {
+            System.out.println("Province già presenti nel database.");
+        }
         if (comuneRepository.count() == 0) {
             comuneImporter.importaDaCsv(pathComuni);
             System.out.println("Importazione comuni completata.");
@@ -35,12 +41,6 @@ public class CsvRunner implements CommandLineRunner {
             System.out.println("Comuni già presenti nel database.");
         }
 
-        if (provinciaRepository.count() == 0) {
-            provinciaImporter.importaDaCsv(pathProvince);
-            System.out.println("Importazione province completata.");
-        } else {
-            System.out.println("Province già presenti nel database.");
-        }
     }
 }
 
