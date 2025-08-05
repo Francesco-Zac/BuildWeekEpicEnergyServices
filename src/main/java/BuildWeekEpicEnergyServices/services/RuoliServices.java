@@ -24,15 +24,15 @@ public class RuoliServices {
                 .orElseThrow(() -> new RuntimeException("Ruolo non trovato"));
     }
 
-    public Ruolo create(RuoloDTO dao) {
+    public Ruolo create(RuoloDTO dto) {
         Ruolo ruolo = new Ruolo();
-        ruolo.setName(dao.getName());
+        ruolo.setName(dto.name());
         return ruoloRepository.save(ruolo);
     }
 
-    public Ruolo update(Long id, RuoloDTO dao) {
+    public Ruolo update(Long id, RuoloDTO dto) {
         Ruolo existing = findById(id);
-        existing.setName(dao.getName());
+        existing.setName(dto.name());
         return ruoloRepository.save(existing);
     }
 
