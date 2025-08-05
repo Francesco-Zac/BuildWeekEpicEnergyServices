@@ -33,3 +33,5 @@ build/
 .vscode/
 
 env.properties
+province-italiane.csv
+comuni-italiani.csv

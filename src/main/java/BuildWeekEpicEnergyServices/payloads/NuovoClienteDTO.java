@@ -44,13 +44,12 @@ public record NuovoClienteDTO(
         String logoAzienda,
 
         @NotBlank(message = "Il tipo di azienda è obbligatorio")
-        String tipoAzienda
+        String tipoAzienda,
 
-        //@NotNull(message = "L'indirizzo della sede operativa è obbligatorio")
-        //IndirizzoDTO sedeOperativa,
+        @NotNull(message = "L'indirizzo della sede operativa è obbligatorio")
+        IndirizzoDTO sedeOperativa,
 
-        //@NotNull(message = "L'indirizzo della sede legale è obbligatorio")
-        //IndirizzoDTO sedeLegale
-
+        @NotNull(message = "L'indirizzo della sede legale è obbligatorio")
+        IndirizzoDTO sedeLegale
 ) {}
 
