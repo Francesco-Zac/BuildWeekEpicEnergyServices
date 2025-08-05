@@ -2,6 +2,7 @@ package BuildWeekEpicEnergyServices.services;
 
 import BuildWeekEpicEnergyServices.entities.Utente;
 import BuildWeekEpicEnergyServices.entities.Ruolo;
+import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
 import BuildWeekEpicEnergyServices.repositories.UtenteRepository;
 import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
@@ -47,6 +48,10 @@ public class UtentiServices {
         utente.setRuoli(ruoli);
 
         return utenteRepository.save(utente);
+    }
+
+    public Utente findByEmail(String email){
+        return this.utenteRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
     }
 
     public Utente update(Long id, UtenteDTO dto) {
