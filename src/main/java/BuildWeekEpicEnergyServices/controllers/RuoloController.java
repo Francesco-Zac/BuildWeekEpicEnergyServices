@@ -3,8 +3,10 @@ package BuildWeekEpicEnergyServices.controllers;
 import BuildWeekEpicEnergyServices.entities.Ruolo;
 import BuildWeekEpicEnergyServices.payloads.RuoloDTO;
 import BuildWeekEpicEnergyServices.services.RuoliServices;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -27,12 +29,12 @@ public class RuoloController {
     }
 
     @PostMapping
-    public Ruolo create(@RequestBody RuoloDTO ruoloDTO) {
+    public Ruolo create(@RequestBody @Valid RuoloDTO ruoloDTO) {
         return ruoliServices.create(ruoloDTO);
     }
 
     @PutMapping("/{id}")
-    public Ruolo update(@PathVariable Long id, @RequestBody RuoloDTO ruoloDTO) {
+    public Ruolo update(@PathVariable Long id, @RequestBody @Valid RuoloDTO ruoloDTO) {
         return ruoliServices.update(id, ruoloDTO);
     }
 
