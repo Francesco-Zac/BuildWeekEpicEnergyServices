@@ -1,6 +1,7 @@
 package BuildWeekEpicEnergyServices.controllers;
 
 import BuildWeekEpicEnergyServices.entities.Utente;
+import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +23,13 @@ public class UtenteController {
     public Utente getById(@PathVariable Long id) { return utentiServices.findById(id); }
 
     @PostMapping
-    public Utente create(@RequestBody Utente utente) { return utentiServices.create(utente); }
+    public Utente create(@RequestBody UtenteDTO utenteDTO) {
+        return utentiServices.create(utenteDTO);
+    }
 
     @PutMapping("/{id}")
-    public Utente update(@PathVariable Long id, @RequestBody Utente data) {
-        return utentiServices.update(id, data);
+    public Utente update(@PathVariable Long id, @RequestBody UtenteDTO utenteDTO) {
+        return utentiServices.update(id, utenteDTO);
     }
 
     @DeleteMapping("/{id}")

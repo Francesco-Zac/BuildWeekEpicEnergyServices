@@ -1,8 +1,10 @@
 package BuildWeekEpicEnergyServices.services;
 
 import BuildWeekEpicEnergyServices.entities.Ruolo;
+import BuildWeekEpicEnergyServices.payloads.RuoloDTO;
 import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -22,13 +24,15 @@ public class RuoliServices {
                 .orElseThrow(() -> new RuntimeException("Ruolo non trovato"));
     }
 
-    public Ruolo create(Ruolo ruolo) {
+    public Ruolo create(RuoloDTO dao) {
+        Ruolo ruolo = new Ruolo();
+        ruolo.setName(dao.getName());
         return ruoloRepository.save(ruolo);
     }
 
-    public Ruolo update(Long id, Ruolo data) {
+    public Ruolo update(Long id, RuoloDTO dao) {
         Ruolo existing = findById(id);
-        existing.setName(data.getName());  // Lombok ha generato setName/getName su `name`
+        existing.setName(dao.getName());
         return ruoloRepository.save(existing);
     }
 
