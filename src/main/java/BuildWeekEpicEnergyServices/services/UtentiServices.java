@@ -6,6 +6,8 @@ import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
 import BuildWeekEpicEnergyServices.repositories.UtenteRepository;
 import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,6 +19,9 @@ public class UtentiServices {
 
     private final UtenteRepository utenteRepository;
     private final RuoloRepository ruoloRepository;
+
+    @Autowired
+    private PasswordEncoder bCrypt;
 
     public UtentiServices(UtenteRepository utenteRepository,
                           RuoloRepository ruoloRepository) {
@@ -37,14 +42,9 @@ public class UtentiServices {
         Utente utente = new Utente();
         utente.setUsername(dto.username());
         utente.setEmail(dto.email());
-        utente.setPassword(dto.password());
+        utente.setPassword(bCrypt.encode(dto.password()));
         utente.setNome(dto.nome());
         utente.setCognome(dto.cognome());
-
-        Set<Ruolo> ruoli = new HashSet<>(
-                ruoloRepository.findAllById(dto.ruoliId())
-        );
-        utente.setRuoli(ruoli);
 
         return utenteRepository.save(utente);
     }
@@ -57,7 +57,7 @@ public class UtentiServices {
         Utente existing = findById(id);
         existing.setUsername(dto.username());
         existing.setEmail(dto.email());
-        existing.setPassword(dto.password());
+        existing.setPassword(bCrypt.encode(dto.password()));
         existing.setNome(dto.nome());
         existing.setCognome(dto.cognome());
 
