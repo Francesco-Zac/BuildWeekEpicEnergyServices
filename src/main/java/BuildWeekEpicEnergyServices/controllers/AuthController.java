@@ -26,15 +26,4 @@ public class AuthController {
         String accessToken = authService.checkCredentialsAndGenerateToken(body);
         return new LoginRespDTO(accessToken);
     }
-
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public NuovoUtenteRespDTO save(@RequestBody @Validated UtenteDTO payload, BindingResult validationResult) {
-        if(validationResult.hasErrors()) {
-            throw new ValidationException(validationResult.getFieldErrors().stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
-        } else {
-            Utente newUtente = this.utentiServices.create(payload);
-            return new NuovoUtenteRespDTO(newUtente.getId());
-        }
-    }
 }
