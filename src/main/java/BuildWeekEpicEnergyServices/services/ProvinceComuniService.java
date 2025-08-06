@@ -24,9 +24,9 @@ public class ProvinceComuniService {
         return provinciaRepository.findAll(pageable);
     }
 
-    public Provincia findByIdProvince(Long id) {
-        return provinciaRepository.findById(String.valueOf(id))
-                .orElseThrow(() -> new NotFoundException("Provincia con ID " + id + " non trovato"));
+    public Provincia findByIdProvince(String sigla) {
+        return provinciaRepository.findById(sigla)
+                .orElseThrow(() -> new NotFoundException("Provincia non trovata con sigla: " + sigla));
     }
 
     public Page<Comune> findAllComuni(Pageable pageable) {

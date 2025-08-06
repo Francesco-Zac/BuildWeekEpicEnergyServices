@@ -33,9 +33,9 @@ public class ProvinceComuniController {
         return provinceComuniService.findAllProvince(pageable);
     }
 
-    @GetMapping("/{provinciaId}")
-    public Provincia getById(@PathVariable Long id) {
-        return provinceComuniService.findByIdProvince(id);
+    @GetMapping("/province/{sigla}")
+    public Provincia getById(@PathVariable String sigla) {
+        return provinceComuniService.findByIdProvince(sigla);
     }
 
 
@@ -53,7 +53,7 @@ public class ProvinceComuniController {
         return provinceComuniService.findAllComuni(pageable);
     }
 
-    @GetMapping("/{comuneId}")
+    @GetMapping("/comuni/{id}")
     public Comune getByIdComuni(@PathVariable Long id) {
         return provinceComuniService.findByIdComuni(id);
     }

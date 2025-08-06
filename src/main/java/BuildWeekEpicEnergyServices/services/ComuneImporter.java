@@ -44,28 +44,30 @@ public class ComuneImporter {
 
                 final String nomeProvincia;
 
-                if (nomeProvinciaOriginale.equalsIgnoreCase("Verbania")) {
-                    nomeProvincia = "Verbano-Cusio-Ossola";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Aosta")) {
-                    nomeProvincia = "Valle d'Aosta/Vallée d'Aoste";
-                }  else if (nomeProvinciaOriginale.equalsIgnoreCase("Monza-Brianza")) {
-                    nomeProvincia = "Monza e della Brianza";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Bolzano")) {
-                    nomeProvincia = "Bolzano/Bozen";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("La-Spezia")) {
-                    nomeProvincia = "La Spezia";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio Emilia")) {
-                    nomeProvincia = "Reggio nell'Emilia";
+                if (nomeProvinciaOriginale.equalsIgnoreCase("Verbano-Cusio-Ossola")) {
+                    nomeProvincia = "Verbania";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Valle d'Aosta/Vallée d'Aoste")) {
+                    nomeProvincia = "Aosta";
+                }  else if (nomeProvinciaOriginale.equalsIgnoreCase("Monza e della Brianza")) {
+                    nomeProvincia = "Monza-Brianza";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Bolzano/Bozen")) {
+                    nomeProvincia = "Bolzano";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("La Spezia")) {
+                    nomeProvincia = "La-Spezia";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio nell'Emilia")) {
+                    nomeProvincia = "Reggio-Emilia";
                 } else if (nomeProvinciaOriginale.equalsIgnoreCase("Forlì-Cesena")) {
                     nomeProvincia = "Forli-Cesena";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Pesaro-Urbino")) {
-                    nomeProvincia = "Pesaro e Urbino";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Ascoli-Piceno")) {
-                    nomeProvincia = "Ascoli Piceno";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio-Calabria")) {
-                    nomeProvincia = "Reggio Calabria";
-                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Vibo-Valentia")) {
-                    nomeProvincia = "Vibo Valentia";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Pesaro e Urbino")) {
+                    nomeProvincia = "Pesaro-Urbino";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Ascoli Piceno")) {
+                    nomeProvincia = "Ascoli-Piceno";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Reggio Calabria")) {
+                    nomeProvincia = "Reggio-Calabria";
+                }else if (nomeProvinciaOriginale.equalsIgnoreCase("Torino")) {
+                    nomeProvincia = "Torino";
+                } else if (nomeProvinciaOriginale.equalsIgnoreCase("Vibo Valentia")) {
+                    nomeProvincia = "Vibo-Valentia";
                 } else if (nomeProvinciaOriginale.equalsIgnoreCase("Sud Sardegna")) {
                     nomeProvincia = "Carbonia Iglesias";
                 } else {
