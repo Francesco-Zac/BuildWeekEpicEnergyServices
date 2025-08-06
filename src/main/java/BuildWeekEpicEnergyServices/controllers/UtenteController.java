@@ -3,15 +3,15 @@ package BuildWeekEpicEnergyServices.controllers;
 import BuildWeekEpicEnergyServices.entities.Utente;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/utenti")
+@RequestMapping("/utenti")
 public class UtenteController {
+
     private final UtentiServices utentiServices;
 
     public UtenteController(UtentiServices utentiServices) {
@@ -29,18 +29,17 @@ public class UtenteController {
     }
 
     @PostMapping
-    public Utente create(@RequestBody @Valid UtenteDTO utenteDTO) {
+    public Utente create(@RequestBody @Validated UtenteDTO utenteDTO) {
         return utentiServices.create(utenteDTO);
     }
 
     @PutMapping("/{id}")
-    public Utente update(@PathVariable Long id, @RequestBody @Valid UtenteDTO utenteDTO) {
+    public Utente update(@PathVariable Long id, @RequestBody @Validated UtenteDTO utenteDTO) {
         return utentiServices.update(id, utenteDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         utentiServices.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
