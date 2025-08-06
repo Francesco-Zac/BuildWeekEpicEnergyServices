@@ -1,8 +1,13 @@
 package BuildWeekEpicEnergyServices.controllers;
 
 import BuildWeekEpicEnergyServices.entities.Utente;
+import BuildWeekEpicEnergyServices.exceptions.ValidationException;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,34 +17,48 @@ import java.util.List;
 @RequestMapping("/utenti")
 public class UtenteController {
 
-    private final UtentiServices utentiServices;
+    @Autowired
+    private UtentiServices utentiServices;
 
-    public UtenteController(UtentiServices utentiServices) {
-        this.utentiServices = utentiServices;
+    @GetMapping("/{utenteId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public Utente getUtenteById(@PathVariable long utenteId) {
+        return utentiServices.findById(utenteId);
     }
 
     @GetMapping
-    public List<Utente> getAll() {
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public List<Utente> getAllUtenti() {
         return utentiServices.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Utente getById(@PathVariable Long id) {
-        return utentiServices.findById(id);
-    }
-
     @PostMapping
-    public Utente create(@RequestBody @Validated UtenteDTO utenteDTO) {
-        return utentiServices.create(utenteDTO);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Utente creaUtente(@RequestBody @Validated UtenteDTO dto, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(validationResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList());
+        }
+        return this.utentiServices.create(dto);
     }
 
-    @PutMapping("/{id}")
-    public Utente update(@PathVariable Long id, @RequestBody @Validated UtenteDTO utenteDTO) {
-        return utentiServices.update(id, utenteDTO);
+    @PutMapping("/{utenteId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Utente updateUtente(@RequestBody @Validated UtenteDTO body, BindingResult validationResult, @PathVariable long utenteId) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(validationResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList());
+        }
+        return this.utentiServices.update(utenteId, body);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        utentiServices.delete(id);
+    @DeleteMapping("/{utenteId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteUtente(@PathVariable long utenteId) {
+        this.utentiServices.delete(utenteId);
     }
 }

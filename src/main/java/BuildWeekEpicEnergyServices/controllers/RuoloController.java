@@ -1,8 +1,13 @@
 package BuildWeekEpicEnergyServices.controllers;
 
 import BuildWeekEpicEnergyServices.entities.Ruolo;
+import BuildWeekEpicEnergyServices.exceptions.ValidationException;
 import BuildWeekEpicEnergyServices.payloads.RuoloDTO;
 import BuildWeekEpicEnergyServices.services.RuoliServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,34 +17,48 @@ import java.util.List;
 @RequestMapping("/ruoli")
 public class RuoloController {
 
-    private final RuoliServices ruoliServices;
+    @Autowired
+    private RuoliServices ruoliServices;
 
-    public RuoloController(RuoliServices ruoliServices) {
-        this.ruoliServices = ruoliServices;
+    @GetMapping("/{ruoloId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public Ruolo getRuoloById(@PathVariable long ruoloId) {
+        return ruoliServices.findById(ruoloId);
     }
 
     @GetMapping
-    public List<Ruolo> getAll() {
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    public List<Ruolo> getAllRuoli() {
         return ruoliServices.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Ruolo getById(@PathVariable Long id) {
-        return ruoliServices.findById(id);
-    }
-
     @PostMapping
-    public Ruolo create(@RequestBody @Validated RuoloDTO ruoloDTO) {
-        return ruoliServices.create(ruoloDTO);
+    @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Ruolo creaRuolo(@RequestBody @Validated RuoloDTO dto, BindingResult validationResult) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(validationResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList());
+        }
+        return this.ruoliServices.create(dto);
     }
 
-    @PutMapping("/{id}")
-    public Ruolo update(@PathVariable Long id, @RequestBody @Validated RuoloDTO ruoloDTO) {
-        return ruoliServices.update(id, ruoloDTO);
+    @PutMapping("/{ruoloId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Ruolo updateRuolo(@RequestBody @Validated RuoloDTO body, BindingResult validationResult, @PathVariable long ruoloId) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(validationResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList());
+        }
+        return this.ruoliServices.update(ruoloId, body);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        ruoliServices.delete(id);
+    @DeleteMapping("/{ruoloId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteRuolo(@PathVariable long ruoloId) {
+        this.ruoliServices.delete(ruoloId);
     }
 }
