@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "utenti")
@@ -44,9 +45,10 @@ public class Utente implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return ruolo.stream()
-                .map(r -> new SimpleGrantedAuthority(r.getName()))
-                .toList();
+                .map(ruolo -> new SimpleGrantedAuthority("ROLE_" + ruolo.getName()))
+                .collect(Collectors.toList());
     }
+
 
     public Long getId() {
         return id;
