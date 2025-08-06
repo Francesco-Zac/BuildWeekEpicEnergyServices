@@ -168,6 +168,8 @@ public class ClientiService {
         }
     }
 
+    // FILTRI E ORDINAMENTI
+
     public Page<Cliente> getAllClienti(int page, int size, String sortBy, String direction) {
         Pageable pageable = PageRequest.of(page, size);
 
@@ -180,17 +182,6 @@ public class ClientiService {
         Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         pageable = PageRequest.of(page, size, sort);
         return clienteRepository.findAll(pageable);
-    }
-
-
-    public Page<Cliente> getClientiOrdinatiPerProvinciaLegaleAsc(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return clienteRepository.findAllOrderByProvinciaSedeLegale(pageable);
-    }
-
-    public Page<Cliente> getClientiOrdinatiPerProvinciaLegaleDesc(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return clienteRepository.findAllOrderByProvinciaSedeLegaleDesc(pageable);
     }
 
     public Page<Cliente> getClientiByNomeContatto(String nomeContatto, int page, int size) {
