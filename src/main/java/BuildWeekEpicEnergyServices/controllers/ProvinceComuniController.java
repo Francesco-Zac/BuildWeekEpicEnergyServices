@@ -37,7 +37,7 @@ public class ProvinceComuniController {
     }
 
 
-    @GetMapping
+    @GetMapping(params = "type=province")
     public Page<Comune> getAllProvince(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
