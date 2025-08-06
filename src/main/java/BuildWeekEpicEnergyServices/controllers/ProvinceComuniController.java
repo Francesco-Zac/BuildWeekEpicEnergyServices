@@ -40,7 +40,7 @@ public class ProvinceComuniController {
 
 
     @GetMapping(params = "type=comuni")
-    public Page<Comune> getAllProvince(
+    public Page<Comune> getAllComuni(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
             @RequestParam(defaultValue = "id") String sortBy,
