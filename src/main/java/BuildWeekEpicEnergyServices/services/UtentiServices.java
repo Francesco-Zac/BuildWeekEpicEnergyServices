@@ -40,10 +40,9 @@ public class UtentiServices {
         utente.setPassword(dto.password());
         utente.setNome(dto.nome());
         utente.setCognome(dto.cognome());
-        utente.setAvatar(dto.avatar());
 
         Set<Ruolo> ruoli = new HashSet<>(
-                ruoloRepository.findAllById(dto.ruoliIds())
+                ruoloRepository.findAllById(dto.ruoliId())
         );
         utente.setRuoli(ruoli);
 
@@ -61,10 +60,9 @@ public class UtentiServices {
         existing.setPassword(dto.password());
         existing.setNome(dto.nome());
         existing.setCognome(dto.cognome());
-        existing.setAvatar(dto.avatar());
 
         Set<Ruolo> ruoli = new HashSet<>(
-                ruoloRepository.findAllById(dto.ruoliIds())
+                ruoloRepository.findAllById(dto.ruoliId())
         );
         existing.setRuoli(ruoli);
 

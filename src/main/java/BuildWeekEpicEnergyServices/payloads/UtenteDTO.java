@@ -10,6 +10,5 @@ public record UtenteDTO(
         @NotBlank(message = "La password è obbligatoria") String password,
         @NotBlank(message = "Il nome è obbligatorio") String nome,
         @NotBlank(message = "Il cognome è obbligatorio") String cognome,
-        String avatar,
-        Set<Long> ruoliIds
+        Set<Long> ruoliId
 ) {}

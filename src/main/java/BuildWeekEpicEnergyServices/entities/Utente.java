@@ -32,7 +32,6 @@ public class Utente implements UserDetails {
     @Column(nullable = false)
     private String cognome;
 
-    private String avatar;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -89,13 +88,6 @@ public class Utente implements UserDetails {
     }
     public void setCognome(String cognome) {
         this.cognome = cognome;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
     }
 
     public Set<Ruolo> getRuoli() {
