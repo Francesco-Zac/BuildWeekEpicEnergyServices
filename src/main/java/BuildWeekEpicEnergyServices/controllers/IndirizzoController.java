@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/indirizzi")
+@RequestMapping("/indirizzi")
 public class IndirizzoController {
 
 
@@ -26,6 +27,7 @@ public class IndirizzoController {
     private IndirizzoService indirizzoService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public Page<Indirizzo> getAll(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "50") int size,
@@ -40,6 +42,7 @@ public class IndirizzoController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public Indirizzo getById(@PathVariable Long id) {
         return indirizzoService.findById(id);
     }
@@ -47,6 +50,7 @@ public class IndirizzoController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public NewIndirizzoResp save(@RequestBody @Validated IndirizzoDTO payload, BindingResult validationResult) {
         if (validationResult.hasErrors()) {
             throw new ValidationException(
@@ -62,11 +66,14 @@ public class IndirizzoController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public Indirizzo update(@PathVariable Long id, @RequestBody IndirizzoDTO indirizzoDTO) {
         return indirizzoService.update(id, indirizzoDTO);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         indirizzoService.delete(id);
     }

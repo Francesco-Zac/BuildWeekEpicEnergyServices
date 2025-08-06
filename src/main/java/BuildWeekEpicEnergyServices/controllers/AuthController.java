@@ -7,6 +7,7 @@ import BuildWeekEpicEnergyServices.services.AuthService;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,7 @@ public class AuthController {
     private UtentiServices utentiServices;
 
     @PostMapping("/login")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public LoginRespDTO login(@RequestBody LoginDTO body) {
         String accessToken = authService.checkCredentialsAndGenerateToken(body);
         return new LoginRespDTO(accessToken);
