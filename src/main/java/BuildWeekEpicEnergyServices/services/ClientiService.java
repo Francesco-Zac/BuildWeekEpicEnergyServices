@@ -192,7 +192,7 @@ public class ClientiService {
         Pageable pageable = PageRequest.of(page, size);
         return clienteRepository.findAllOrderByProvinciaSedeLegaleDesc(pageable);
     }
-    
+
     public Page<Cliente> getClientiByNomeContatto(String nomeContatto, int page, int size) {
         return clienteRepository.findByNomeContattoContainingIgnoreCase(nomeContatto, PageRequest.of(page, size));
     }
