@@ -1,4 +1,4 @@
 package BuildWeekEpicEnergyServices.payloads;
 
-public record NewIndirizzoResp() {
+public record NewIndirizzoResp(Long id) {
 }
