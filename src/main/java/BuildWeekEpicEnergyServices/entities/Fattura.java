@@ -3,8 +3,8 @@ package BuildWeekEpicEnergyServices.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "fatture")
@@ -31,4 +31,7 @@ public class Fattura {
 
     @Column(nullable = false)
     private String numero;
+
+    @Column(nullable = false)
+    private BigDecimal importo;
 }

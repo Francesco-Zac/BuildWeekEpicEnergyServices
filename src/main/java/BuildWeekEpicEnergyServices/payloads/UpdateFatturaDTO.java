@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public record NewFatturaDTO(
+public record UpdateFatturaDTO(
         @NotNull
         LocalDate data,
         @NotNull
