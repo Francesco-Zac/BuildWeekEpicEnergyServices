@@ -1,6 +1,7 @@
 package BuildWeekEpicEnergyServices.entities;
 
 import BuildWeekEpicEnergyServices.enums.TipoSede;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,14 +28,15 @@ public class Indirizzo {
     private Comune comune;
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
     private Cliente cliente;
 
-    public Indirizzo(String via, int civico, int cap, TipoSede tipoSede, Comune comune, Cliente cliente) {
+    public Indirizzo(String via, int civico, int cap, TipoSede tipoSede, Comune comune) {
         this.via = via;
         this.civico = civico;
         this.cap = cap;
         this.tipoSede = tipoSede;
         this.comune = comune;
-        this.cliente = cliente;
+
     }
 }

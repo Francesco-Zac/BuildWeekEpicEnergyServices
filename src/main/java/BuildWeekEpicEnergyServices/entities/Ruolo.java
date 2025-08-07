@@ -1,5 +1,6 @@
 package BuildWeekEpicEnergyServices.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,6 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties({"id"})
 public class Ruolo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

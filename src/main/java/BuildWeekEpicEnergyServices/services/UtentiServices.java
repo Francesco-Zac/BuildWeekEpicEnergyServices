@@ -2,8 +2,10 @@ package BuildWeekEpicEnergyServices.services;
 
 import BuildWeekEpicEnergyServices.entities.Utente;
 import BuildWeekEpicEnergyServices.entities.Ruolo;
+import BuildWeekEpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
+import BuildWeekEpicEnergyServices.payloads.UtenteUpdateDTO;
 import BuildWeekEpicEnergyServices.repositories.UtenteRepository;
 import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -72,10 +75,15 @@ public class UtentiServices {
         existing.setNome(dto.nome());
         existing.setCognome(dto.cognome());
 
-        Set<Ruolo> ruoli = new HashSet<>(
-                ruoloRepository.findAllById(dto.ruoliId())
-        );
-        existing.setRuoli(ruoli);
+        if (dto.ruoliId() != null && !dto.ruoliId().isEmpty()) {
+            List<Long> idsPuliti = dto.ruoliId().stream()
+                    .filter(Objects::nonNull)
+                    .toList();
+            Set<Ruolo> ruoli = new HashSet<>(ruoloRepository.findAllById(idsPuliti));
+            existing.setRuoli(ruoli);
+        } else {
+            existing.setRuoli(new HashSet<>());
+        }
 
         return utenteRepository.save(existing);
     }
@@ -84,7 +92,50 @@ public class UtentiServices {
         utenteRepository.deleteById(id);
     }
 
+    public Utente updateDTO(Long id, UtenteUpdateDTO dto) {
+        Utente existing = findById(id);
+
+        if (dto.username() != null) {
+            if (dto.username().isBlank()) {
+                throw new BadRequestException("Lo username non può essere vuoto.");
+            }
+            existing.setUsername(dto.username());
+        }
+
+        if (dto.email() != null) {
+            if (dto.email().isBlank()) {
+                throw new BadRequestException("L'email non può essere vuota.");
+            }
+            if (!dto.email().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                throw new BadRequestException("Formato email non valido.");
+            }
+            existing.setEmail(dto.email());
+        }
+
+        if (dto.password() != null) {
+            if (dto.password().isBlank()) {
+                throw new BadRequestException("La password non può essere vuota.");
+            }
+            existing.setPassword(bCrypt.encode(dto.password()));
+        }
+
+        if (dto.nome() != null) existing.setNome(dto.nome());
+        if (dto.cognome() != null) existing.setCognome(dto.cognome());
+
+        if (dto.ruoliId() != null) {
+            List<Long> idsPuliti = dto.ruoliId().stream()
+                    .filter(Objects::nonNull)
+                    .toList();
+            Set<Ruolo> ruoli = new HashSet<>(ruoloRepository.findAllById(idsPuliti));
+            existing.setRuoli(ruoli);
+        }
+
+        return utenteRepository.save(existing);
+    }
+
+
     public boolean existsByUsername(String username) {
         return this.utenteRepository.existsByUsername(username);
     }
+    public boolean existsByEmail(String email){return this.utenteRepository.existsByEmail(email);}
 }

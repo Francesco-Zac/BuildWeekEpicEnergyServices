@@ -4,6 +4,7 @@ import BuildWeekEpicEnergyServices.entities.Ruolo;
 import BuildWeekEpicEnergyServices.entities.Utente;
 import BuildWeekEpicEnergyServices.exceptions.ValidationException;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
+import BuildWeekEpicEnergyServices.payloads.UtenteUpdateDTO;
 import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,13 +58,13 @@ public class UtenteController {
 
     @PutMapping("/{utenteId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Utente updateUtente(@RequestBody @Validated UtenteDTO body, BindingResult validationResult, @PathVariable long utenteId) {
+    public Utente updateUtente(@RequestBody @Validated UtenteUpdateDTO body, BindingResult validationResult, @PathVariable long utenteId) {
         if (validationResult.hasErrors()) {
             throw new ValidationException(validationResult.getFieldErrors().stream()
                     .map(fieldError -> fieldError.getDefaultMessage())
                     .toList());
         }
-        return this.utentiServices.update(utenteId, body);
+        return this.utentiServices.updateDTO(utenteId, body);
     }
 
     @DeleteMapping("/{utenteId}")
@@ -79,8 +80,9 @@ public class UtenteController {
     }
 
     @PutMapping("/me")
-    public Utente updateOwnProfile(@AuthenticationPrincipal Utente currentAuthenticatedUtente, @RequestBody @Validated UtenteDTO payload) {
-        return this.utentiServices.update(currentAuthenticatedUtente.getId(), payload);
+    public Utente updateOwnProfile(@AuthenticationPrincipal Utente currentAuthenticatedUtente,
+                                   @RequestBody UtenteUpdateDTO payload) {
+        return this.utentiServices.updateDTO(currentAuthenticatedUtente.getId(), payload);
     }
 
 }

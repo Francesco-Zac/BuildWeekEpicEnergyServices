@@ -36,7 +36,7 @@ public class Cliente {
     private LocalDate ultimoContattoIl;
 
     @Column(name = "fatturato_annuo")
-    private double fatturatoAnnuo;
+    private int fatturatoAnnuo;
 
     private String pec;
 

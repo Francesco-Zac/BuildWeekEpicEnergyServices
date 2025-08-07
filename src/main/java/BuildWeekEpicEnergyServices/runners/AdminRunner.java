@@ -23,6 +23,7 @@ public class AdminRunner implements CommandLineRunner {
     public void run(String... args) {
 
         String username = "admin";
+        String email= "test@admin.com";
 
         Ruolo ruoloAdmin = ruoloRepository.findByName("ADMIN")
                 .orElseGet(() -> {
@@ -40,6 +41,11 @@ public class AdminRunner implements CommandLineRunner {
 
         if (utentiServices.existsByUsername(username)) {
             System.out.println("Utente admin già presente, non viene ricreato.");
+            return;
+        }
+
+        if (utentiServices.existsByEmail(email)){
+            System.out.println("Utente già presente non viene ricreato.");
             return;
         }
 

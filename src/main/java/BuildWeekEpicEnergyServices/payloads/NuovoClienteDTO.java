@@ -21,7 +21,7 @@ public record NuovoClienteDTO(
         LocalDate ultimoContattoIl,
 
         @PositiveOrZero(message = "Il fatturato deve essere positivo o zero")
-        double fatturatoAnnuo,
+        int fatturatoAnnuo,
 
         @NotBlank(message = "La PEC è obbligatoria")
         @Email(message = "PEC non valida")
@@ -44,7 +44,7 @@ public record NuovoClienteDTO(
 
         String logoAzienda,
 
-        @NotBlank(message = "Il tipo di azienda è obbligatorio")
+//        @NotBlank(message = "Il tipo di azienda è obbligatorio")
         TipoAzienda tipoAzienda,
 
         @NotNull(message = "L'indirizzo della sede operativa è obbligatorio")
