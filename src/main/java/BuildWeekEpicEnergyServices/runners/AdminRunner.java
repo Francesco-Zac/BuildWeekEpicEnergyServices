@@ -29,6 +29,12 @@ public class AdminRunner implements CommandLineRunner {
             return;
         }
 
+        Ruolo creaAdmin = ruoloRepository.findByName("ADMIN")
+                .orElseGet(() -> {
+                    Ruolo nuovoRuolo = new Ruolo("ADMIN");
+                    return ruoloRepository.save(nuovoRuolo);
+                });
+
         Ruolo ruoloAdmin = ruoloRepository.findByName("ADMIN").orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
 
         UtenteDTO adminTest = new UtenteDTO(username, "test@admin.com", "1234", "Admin", "Test", Set.of(2L));
