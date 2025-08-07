@@ -9,6 +9,7 @@ import BuildWeekEpicEnergyServices.services.UtentiServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -71,4 +72,15 @@ public class UtenteController {
     public void deleteUtente(@PathVariable long utenteId) {
         this.utentiServices.delete(utenteId);
     }
+
+    @GetMapping("/me")
+    public Utente getOwnProfile(@AuthenticationPrincipal Utente currentAuthenticatedUtente) {
+        return currentAuthenticatedUtente;
+    }
+
+    @PutMapping("/me")
+    public Utente updateOwnProfile(@AuthenticationPrincipal Utente currentAuthenticatedUtente, @RequestBody @Validated UtenteDTO payload) {
+        return this.utentiServices.update(currentAuthenticatedUtente.getId(), payload);
+    }
+
 }
