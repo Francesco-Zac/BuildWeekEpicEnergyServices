@@ -1,6 +1,7 @@
 package BuildWeekEpicEnergyServices.entities;
 
 import BuildWeekEpicEnergyServices.enums.TipoAzienda;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
+@JsonIgnoreProperties({"id", "ultimoContattoIl", "emailContatto", "nomeContatto", "cognomeContatto", "telefonoContatto", "fatture", "sedeLegale", "sedeOperativa", "indirizzi"})
 public class Cliente {
 
     @Id

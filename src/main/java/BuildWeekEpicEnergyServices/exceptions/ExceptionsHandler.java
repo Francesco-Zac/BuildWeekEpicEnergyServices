@@ -44,13 +44,6 @@ public class ExceptionsHandler {
         return new ErrorsDTO("Non hai i permessi per loggare!", LocalDateTime.now());
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
-    public ErrorsDTO handleServerError(Exception ex) {
-        ex.printStackTrace();
-        return new ErrorsDTO("Errore generico! Ci stiamo lavorando", LocalDateTime.now());
-    }
-
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsDTO handleBadEnum(HttpMessageNotReadableException ex) {
@@ -60,4 +53,10 @@ public class ExceptionsHandler {
         );
     }
 
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
+    public ErrorsDTO handleServerError(Exception ex) {
+        ex.printStackTrace();
+        return new ErrorsDTO("Errore generico! Ci stiamo lavorando", LocalDateTime.now());
+    }
 }
