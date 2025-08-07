@@ -38,16 +38,16 @@ public class UtentiServices {
                 .orElseThrow(() -> new RuntimeException("Utente non trovato"));
     }
 
-    public Utente create(UtenteDTO dto) {
-        Utente utente = new Utente();
-        utente.setUsername(dto.username());
-        utente.setEmail(dto.email());
-        utente.setPassword(bCrypt.encode(dto.password()));
-        utente.setNome(dto.nome());
-        utente.setCognome(dto.cognome());
-
-        return utenteRepository.save(utente);
-    }
+//    public Utente create(UtenteDTO dto) {
+//        Utente utente = new Utente();
+//        utente.setUsername(dto.username());
+//        utente.setEmail(dto.email());
+//        utente.setPassword(bCrypt.encode(dto.password()));
+//        utente.setNome(dto.nome());
+//        utente.setCognome(dto.cognome());
+//
+//        return utenteRepository.save(utente);
+//    }
 
     public Utente create(UtenteDTO dto, Set<Ruolo> ruoli) {
         Utente utente = new Utente();

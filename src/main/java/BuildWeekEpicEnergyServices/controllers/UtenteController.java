@@ -1,8 +1,10 @@
 package BuildWeekEpicEnergyServices.controllers;
 
+import BuildWeekEpicEnergyServices.entities.Ruolo;
 import BuildWeekEpicEnergyServices.entities.Utente;
 import BuildWeekEpicEnergyServices.exceptions.ValidationException;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
+import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/utenti")
@@ -19,6 +22,8 @@ public class UtenteController {
 
     @Autowired
     private UtentiServices utentiServices;
+    @Autowired
+    private RuoloRepository ruoloRepository;
 
     @GetMapping("/{utenteId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
@@ -41,7 +46,12 @@ public class UtenteController {
                     .map(fieldError -> fieldError.getDefaultMessage())
                     .toList());
         }
-        return this.utentiServices.create(dto);
+        Ruolo ruoloUser = ruoloRepository.findByName("USER")
+                .orElseGet(() -> {
+                    System.out.println("Ruolo USER non trovato, lo creo...");
+                    return ruoloRepository.save(new Ruolo("USER"));
+                });
+        return this.utentiServices.create(dto, Set.of(ruoloUser));
     }
 
     @PutMapping("/{utenteId}")
