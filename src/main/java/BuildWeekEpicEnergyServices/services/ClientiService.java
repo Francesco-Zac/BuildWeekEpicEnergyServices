@@ -6,6 +6,7 @@ import BuildWeekEpicEnergyServices.entities.Comune;
 import BuildWeekEpicEnergyServices.enums.TipoSede;
 import BuildWeekEpicEnergyServices.exceptions.BadRequestException;
 import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
+import BuildWeekEpicEnergyServices.payloads.ClienteUpdateDTO;
 import BuildWeekEpicEnergyServices.payloads.NuovoClienteDTO;
 import BuildWeekEpicEnergyServices.payloads.IndirizzoDTO;
 import BuildWeekEpicEnergyServices.repositories.ClienteRepository;
@@ -103,44 +104,64 @@ public class ClientiService {
         return this.clienteRepository.findById(clienteId).orElseThrow(() -> new NotFoundException(clienteId));
     }
 
-    public Cliente findByIdAndUpdate(long id, NuovoClienteDTO dto) {
-        Cliente cliente = clienteRepository.findById(id)
+    public Cliente findByIdAndUpdate(long id, ClienteUpdateDTO dto) {
+        Cliente existing = clienteRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Cliente con ID " + id + " non trovato"));
 
-        try {
-            cliente.setRagioneSociale(dto.ragioneSociale());
-            cliente.setPartitaIva(dto.partitaIva());
-            cliente.setEmail(dto.email());
-            cliente.setUltimoContattoIl(dto.ultimoContattoIl());
-            cliente.setFatturatoAnnuo(dto.fatturatoAnnuo());
-            cliente.setPec(dto.pec());
-            cliente.setNumeroTelefono(dto.numeroTelefono());
-            cliente.setEmailContatto(dto.emailContatto());
-            cliente.setNomeContatto(dto.nomeContatto());
-            cliente.setCognomeContatto(dto.cognomeContatto());
-            cliente.setTelefonoContatto(dto.telefonoContatto());
-            cliente.setLogoAzienda(dto.logoAzienda());
-            cliente.setTipo(dto.tipoAzienda());
-
-            indirizzoRepository.deleteAllByClienteId(cliente.getId());
-
-            Indirizzo nuovaSedeLegale = costruisciIndirizzo(dto.sedeLegale(), TipoSede.LEGALE, cliente);
-            Indirizzo nuovaSedeOperativa = costruisciIndirizzo(dto.sedeOperativa(), TipoSede.OPERATIVA, cliente);
-            indirizzoRepository.save(nuovaSedeLegale);
-            indirizzoRepository.save(nuovaSedeOperativa);
-
-            cliente.setSedeLegale(nuovaSedeLegale);
-            cliente.setSedeOperativa(nuovaSedeOperativa);
-
-            cliente.getIndirizzi().clear();
-            cliente.getIndirizzi().add(nuovaSedeLegale);
-            cliente.getIndirizzi().add(nuovaSedeOperativa);
-
-            return clienteRepository.save(cliente);
-
-        } catch (Exception ex) {
-            throw new RuntimeException("Errore durante l'aggiornamento del cliente: " + ex.getMessage());
+        if (dto.ragioneSociale() != null) {
+            if (dto.ragioneSociale().isBlank()) {
+                throw new BadRequestException("La ragione sociale non può essere vuota.");
+            }
+            existing.setRagioneSociale(dto.ragioneSociale());
         }
+
+        if (dto.email() != null) {
+            if (dto.email().isBlank()) {
+                throw new BadRequestException("L'email non può essere vuota.");
+            }
+            if (!dto.email().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                throw new BadRequestException("Formato email non valido.");
+            }
+            existing.setEmail(dto.email());
+        }
+
+        if (dto.pec() != null) {
+            existing.setPec(dto.pec());
+        }
+
+        if (dto.numeroTelefono() != null) {
+            existing.setNumeroTelefono(dto.numeroTelefono());
+        }
+
+        if (dto.emailContatto() != null) {
+            existing.setEmailContatto(dto.emailContatto());
+        }
+
+        if (dto.nomeContatto() != null) {
+            existing.setNomeContatto(dto.nomeContatto());
+        }
+
+        if (dto.cognomeContatto() != null) {
+            existing.setCognomeContatto(dto.cognomeContatto());
+        }
+
+        if (dto.telefonoContatto() != null) {
+            existing.setTelefonoContatto(dto.telefonoContatto());
+        }
+
+        if (dto.ultimoContattoIl() != null) {
+            existing.setUltimoContattoIl(dto.ultimoContattoIl());
+        }
+
+        if (dto.fatturatoAnnuo() != null) {
+            existing.setFatturatoAnnuo(dto.fatturatoAnnuo());
+        }
+
+        if (dto.tipo() != null) {
+            existing.setTipo(dto.tipo());
+        }
+
+        return clienteRepository.save(existing);
     }
 
     public void findByIdAndDelete(long clienteId) {

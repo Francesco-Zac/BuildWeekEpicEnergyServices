@@ -2,6 +2,7 @@ package BuildWeekEpicEnergyServices.controllers;
 
 import BuildWeekEpicEnergyServices.entities.Cliente;
 import BuildWeekEpicEnergyServices.exceptions.ValidationException;
+import BuildWeekEpicEnergyServices.payloads.ClienteUpdateDTO;
 import BuildWeekEpicEnergyServices.payloads.NuovoClienteDTO;
 import BuildWeekEpicEnergyServices.services.ClientiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class ClienteController {
 
     @PutMapping("/{clienteId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-    public Cliente updateCliente(@RequestBody @Validated NuovoClienteDTO dto, BindingResult validationResult, @PathVariable long clienteId) {
+    public Cliente updateCliente(@RequestBody @Validated ClienteUpdateDTO dto, BindingResult validationResult, @PathVariable long clienteId) {
         if(validationResult.hasErrors()) {
             throw new ValidationException((validationResult.getFieldErrors()
                     .stream().map(fieldError -> fieldError.getDefaultMessage()).toList()));
