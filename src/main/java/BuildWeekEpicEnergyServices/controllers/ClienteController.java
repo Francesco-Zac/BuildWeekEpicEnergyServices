@@ -53,14 +53,14 @@ public class ClienteController {
     }
 
     @PutMapping("/{clienteId}")
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-    public Cliente updateCliente(@RequestBody @Validated ClienteUpdateDTO dto, BindingResult validationResult, @PathVariable long clienteId) {
-        if(validationResult.hasErrors()) {
-            throw new ValidationException((validationResult.getFieldErrors()
-                    .stream().map(fieldError -> fieldError.getDefaultMessage()).toList()));
-        } else {
-            return this.clientiService.findByIdAndUpdate(clienteId, dto);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Cliente updateCliente(@RequestBody @Validated ClienteUpdateDTO body, BindingResult validationResult, @PathVariable long clienteId) {
+        if (validationResult.hasErrors()) {
+            throw new ValidationException(validationResult.getFieldErrors().stream()
+                    .map(fieldError -> fieldError.getDefaultMessage())
+                    .toList());
         }
+        return this.clientiService.findByIdAndUpdate(clienteId, body);
     }
 
     @DeleteMapping("/{clienteId}")
