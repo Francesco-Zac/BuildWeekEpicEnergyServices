@@ -53,7 +53,7 @@ public class ClienteController {
     }
 
     @PutMapping("/{clienteId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public Cliente updateCliente(@RequestBody @Validated ClienteUpdateDTO body, BindingResult validationResult, @PathVariable long clienteId) {
         if (validationResult.hasErrors()) {
             throw new ValidationException(validationResult.getFieldErrors().stream()
