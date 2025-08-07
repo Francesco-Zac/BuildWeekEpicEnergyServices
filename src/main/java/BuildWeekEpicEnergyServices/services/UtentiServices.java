@@ -49,6 +49,17 @@ public class UtentiServices {
         return utenteRepository.save(utente);
     }
 
+    public Utente create(UtenteDTO dto, Set<Ruolo> ruoli) {
+        Utente utente = new Utente();
+        utente.setUsername(dto.username());
+        utente.setEmail(dto.email());
+        utente.setPassword(bCrypt.encode(dto.password()));
+        utente.setNome(dto.nome());
+        utente.setCognome(dto.cognome());
+        utente.setRuoli(ruoli);
+        return utenteRepository.save(utente);
+    }
+
     public Utente findByEmail(String email){
         return this.utenteRepository.findByEmail(email).orElseThrow(() -> new NotFoundException(email));
     }
@@ -71,5 +82,9 @@ public class UtentiServices {
 
     public void delete(Long id) {
         utenteRepository.deleteById(id);
+    }
+
+    public boolean existsByUsername(String username) {
+        return this.utenteRepository.existsByUsername(username);
     }
 }

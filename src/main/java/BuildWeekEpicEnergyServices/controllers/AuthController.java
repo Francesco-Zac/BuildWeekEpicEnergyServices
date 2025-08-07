@@ -23,22 +23,9 @@ public class AuthController {
     private UtentiServices utentiServices;
 
     @PostMapping("/login")
-    @PreAuthorize("hasAnyAuthority('1', 'USER')")
     public LoginRespDTO login(@RequestBody LoginDTO body) {
         String accessToken = authService.checkCredentialsAndGenerateToken(body);
         return new LoginRespDTO(accessToken);
-    }
-
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public NuovoUtenteRespDTO save(@RequestBody @Validated UtenteDTO payload, BindingResult validationResult) {
-        if(validationResult.hasErrors()) {
-            throw new ValidationException(validationResult.getFieldErrors()
-                    .stream().map(fieldError -> fieldError.getDefaultMessage()).toList());
-        } else {
-            Utente nuovoUtente = this.utentiServices.create(payload);
-            return new NuovoUtenteRespDTO(nuovoUtente.getId());
-        }
     }
    
 }
