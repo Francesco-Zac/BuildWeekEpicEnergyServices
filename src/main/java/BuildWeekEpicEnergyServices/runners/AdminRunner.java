@@ -24,22 +24,35 @@ public class AdminRunner implements CommandLineRunner {
 
         String username = "admin";
 
+        Ruolo ruoloAdmin = ruoloRepository.findByName("ADMIN")
+                .orElseGet(() -> {
+                    System.out.println("Ruolo ADMIN non trovato, lo creo...");
+                    return ruoloRepository.save(new Ruolo("ADMIN"));
+                });
+
+        Ruolo ruoloUser = ruoloRepository.findByName("USER")
+                .orElseGet(() -> {
+                    System.out.println("Ruolo USER non trovato, lo creo...");
+                    return ruoloRepository.save(new Ruolo("USER"));
+                });
+
+        System.out.println("Ruolo USER creato con ID: " + ruoloUser.getId());
+
         if (utentiServices.existsByUsername(username)) {
             System.out.println("Utente admin già presente, non viene ricreato.");
             return;
         }
 
-        Ruolo creaAdmin = ruoloRepository.findByName("ADMIN")
-                .orElseGet(() -> {
-                    Ruolo nuovoRuolo = new Ruolo("ADMIN");
-                    return ruoloRepository.save(nuovoRuolo);
-                });
+        UtenteDTO adminTest = new UtenteDTO(
+                username,
+                "test@admin.com",
+                "1234",
+                "Admin",
+                "Test",
+                Set.of(ruoloAdmin.getId())
+        );
 
-        Ruolo ruoloAdmin = ruoloRepository.findByName("ADMIN").orElseThrow(() -> new RuntimeException("Ruolo ADMIN non trovato"));
-
-        UtenteDTO adminTest = new UtenteDTO(username, "test@admin.com", "1234", "Admin", "Test", Set.of(1L));
         utentiServices.create(adminTest, Set.of(ruoloAdmin));
-
         System.out.println("Utente admin creato con successo.");
     }
 }

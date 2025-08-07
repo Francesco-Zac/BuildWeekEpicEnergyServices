@@ -45,12 +45,7 @@ public class JWTCheckerFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        String path = request.getServletPath();
-
-        return
-                path.equals("/auth/**") ||
-                path.equals("/province-comuni/**");
-
+    protected boolean shouldNotFilter(HttpServletRequest request){
+        return new AntPathMatcher().match("/auth/**", request.getServletPath());
     }
 }
