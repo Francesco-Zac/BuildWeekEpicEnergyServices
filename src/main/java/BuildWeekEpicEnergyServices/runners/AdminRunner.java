@@ -1,18 +1,12 @@
 package BuildWeekEpicEnergyServices.runners;
 
 import BuildWeekEpicEnergyServices.entities.Ruolo;
-import BuildWeekEpicEnergyServices.entities.Utente;
-import BuildWeekEpicEnergyServices.exceptions.ValidationException;
-import BuildWeekEpicEnergyServices.payloads.NuovoUtenteRespDTO;
 import BuildWeekEpicEnergyServices.payloads.UtenteDTO;
 import BuildWeekEpicEnergyServices.repositories.RuoloRepository;
 import BuildWeekEpicEnergyServices.services.UtentiServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Set;
 
