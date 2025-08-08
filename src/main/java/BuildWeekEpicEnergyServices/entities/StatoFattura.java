@@ -1,10 +1,7 @@
 package BuildWeekEpicEnergyServices.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,18 +11,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@ToString
 public class StatoFattura {
 
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private long id;
 
-    @Column(nullable = false, unique = true)
-    private String nome;
-
-    @Column(nullable = false)
-    private String descrizione;
+    @Column( nullable = false)
+    private String stato;
 
     @OneToMany(mappedBy = "statoFattura")
     private List<Fattura> fatture;

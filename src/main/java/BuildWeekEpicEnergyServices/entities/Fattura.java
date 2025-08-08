@@ -8,15 +8,17 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "fatture")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@ToString
 
 public class Fattura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
-    private long id;
+    @Column(name = "numero_fattura")
+    private long numeroFattura;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "cliente_id", nullable = false)
@@ -29,8 +31,6 @@ public class Fattura {
     @Column(nullable = false)
     private LocalDate data;
 
-    @Column(nullable = false)
-    private String numero;
 
     @Column(nullable = false)
     private BigDecimal importo;
