@@ -103,7 +103,7 @@ public class FatturaService {
 
 
     public Page<Fattura> getFattureByStatoId(long statoId, int page, int size) {
-        return fatturaRepository.findByStato_Id(statoId, PageRequest.of(page, size));
+        return fatturaRepository.findByStatoFattura_Id(statoId, PageRequest.of(page, size));
     }
 
     public Page<Fattura> getFattureByData(LocalDate data, int page, int size) {

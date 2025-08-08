@@ -79,10 +79,6 @@ public class UtenteController {
         return currentAuthenticatedUtente;
     }
 
-    @PutMapping("/me")
-    public Utente updateOwnProfile(@AuthenticationPrincipal Utente currentAuthenticatedUtente,
-                                   @RequestBody UtenteUpdateDTO payload) {
-        return this.utentiServices.updateDTO(currentAuthenticatedUtente.getId(), payload);
-    }
+
 
 }

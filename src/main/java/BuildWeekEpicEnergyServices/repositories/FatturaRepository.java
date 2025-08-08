@@ -19,7 +19,7 @@ public interface FatturaRepository extends JpaRepository<Fattura, Long> {
     Page<Fattura> findByCliente_Id(Long clienteId, Pageable pageable);
 
 
-    Page<Fattura> findByStato_Id(Long statoId, Pageable pageable);
+    Page<Fattura> findByStatoFattura_Id(Long statoId, Pageable pageable);
 
 
     Page<Fattura> findByData(LocalDate data, Pageable pageable);

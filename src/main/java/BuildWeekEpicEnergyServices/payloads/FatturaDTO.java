@@ -26,7 +26,6 @@ public record FatturaDTO(
         StatoFattura statoFattura,
         @NotNull(message = "La data della fattura è obbligatoria")
         LocalDate data,
-        @Size(min = 0,message = "La fattura deve avere un importo superiore a 0!")
         BigDecimal importo
 ) {
 
