@@ -54,10 +54,9 @@ public class ExceptionsHandler {
         );
     }
 
-
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorsDTO handleBadMethod(HttpMessageNotReadableException ex) {
+    public ErrorsDTO handleBadMethod(HttpRequestMethodNotSupportedException ex) {
         return new ErrorsDTO(
                 "Tipo di metodo non supportato!! Sei sicuro che stai usando quello giusto? Non è che stai a fa una POST invece che una GET? Guarda che ti vedo.",
                 LocalDateTime.now()
