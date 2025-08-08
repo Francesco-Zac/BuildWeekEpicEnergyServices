@@ -17,7 +17,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     @Query("SELECT c FROM Cliente c JOIN c.sedeLegale s JOIN s.comune com JOIN com.provincia p ORDER BY p.provincia DESC")
     Page<Cliente> findAllOrderByProvinciaSedeLegaleDesc(Pageable pageable);
 
-    Page<Cliente> findByNomeContattoContainingIgnoreCase(String nomeContatto, Pageable pageable);
+    Page<Cliente> findByRagioneSocialeContainingIgnoreCase(String nomeContatto, Pageable pageable);
 
     Page<Cliente> findByFatturatoAnnuoGreaterThanEqual(double minFatturato, Pageable pageable);
 

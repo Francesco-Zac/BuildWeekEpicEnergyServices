@@ -205,8 +205,8 @@ public class ClientiService {
         return clienteRepository.findAll(pageable);
     }
 
-    public Page<Cliente> getClientiByNomeContatto(String nomeContatto, int page, int size) {
-        return clienteRepository.findByNomeContattoContainingIgnoreCase(nomeContatto, PageRequest.of(page, size));
+    public Page<Cliente> getClientiByRagioneSociale(String ragioneSociale, int page, int size) {
+        return clienteRepository.findByRagioneSocialeContainingIgnoreCase(ragioneSociale, PageRequest.of(page, size));
     }
 
     public Page<Cliente> getClientiByMinFatturato(double minFatturato, int page, int size) {

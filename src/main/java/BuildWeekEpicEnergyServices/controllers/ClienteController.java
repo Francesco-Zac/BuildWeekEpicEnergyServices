@@ -76,14 +76,14 @@ public class ClienteController {
         return this.clientiService.uploadLogo(clienteId, file);
     }
 
-    @GetMapping("/nome-contatto")
+    @GetMapping("/nome-azienda")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-    public Page<Cliente> getClientiByNomeContatto(
-            @RequestParam String nome,
+    public Page<Cliente> getClientiByRagioneSociale(
+            @RequestParam String rs,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
     ) {
-        return clientiService.getClientiByNomeContatto(nome, page, size);
+        return clientiService.getClientiByRagioneSociale(rs, page, size);
     }
 
     @GetMapping("/fatturato")
