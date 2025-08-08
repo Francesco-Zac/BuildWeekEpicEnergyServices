@@ -4,24 +4,22 @@ import BuildWeekEpicEnergyServices.entities.Cliente;
 import BuildWeekEpicEnergyServices.entities.Fattura;
 import BuildWeekEpicEnergyServices.entities.StatoFattura;
 import BuildWeekEpicEnergyServices.exceptions.NotFoundException;
-import BuildWeekEpicEnergyServices.payloads.FatturaSpecification;
-import BuildWeekEpicEnergyServices.payloads.NewFatturaDTO;
-import BuildWeekEpicEnergyServices.payloads.UpdateFatturaDTO;
+import BuildWeekEpicEnergyServices.payloads.FatturaDTO;
+import BuildWeekEpicEnergyServices.payloads.FatturaUpdateDTO;
 import BuildWeekEpicEnergyServices.repositories.ClienteRepository;
 import BuildWeekEpicEnergyServices.repositories.FatturaRepository;
 import BuildWeekEpicEnergyServices.repositories.StatoFatturaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Service
 @Slf4j
@@ -33,9 +31,9 @@ public class FatturaService {
     @Autowired
     private StatoFatturaRepository statoFatturaRepository;
 
-    public Fattura save(NewFatturaDTO dto) {
-        Cliente cliente = clienteRepository.findById(dto.clienteId()).orElseThrow(() -> new NotFoundException("Cliente non trovato"));
-        StatoFattura statoFattura = statoFatturaRepository.findById(dto.statoId()).orElseThrow(() -> new NotFoundException("Stato non trovato"));
+    public Fattura save(FatturaDTO dto) {
+        Cliente cliente = clienteRepository.findById(dto.cliente().getId()).orElseThrow(() -> new NotFoundException("Cliente non trovato"));
+        StatoFattura statoFattura = statoFatturaRepository.findById(dto.statoFattura().getId()).orElseThrow(() -> new NotFoundException("Stato non trovato"));
 
         Fattura f = new Fattura();
         f.setData(dto.data());
@@ -47,36 +45,81 @@ public class FatturaService {
 
     }
 
-    public Fattura findById(UUID id) {
+    public Fattura findById(Long id) {
         return fatturaRepository.findById(id).orElseThrow(() -> new NotFoundException("Fattura non trovata"));
     }
 
-    public Fattura update(UUID id, UpdateFatturaDTO dto) {
-        Fattura esistente = findById(id);
+    public Fattura update(Long id, FatturaUpdateDTO dto) {
+        Fattura existing = fatturaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Fattura non trovata con id: " + id));
 
-        Cliente cliente = clienteRepository.findById(dto.clienteId()).orElseThrow(() -> new NotFoundException("Cliente non trovato"));
 
-        StatoFattura statoFattura = statoFatturaRepository.findById(dto.statoId()).orElseThrow(() -> new NotFoundException("Stato non trovato"));
+        if (dto.data() == null) {
+            throw new IllegalArgumentException("La data non può essere null");
+        }
 
-        esistente.setData(dto.data());
-        esistente.setImporto(dto.importo());
-        esistente.setNumero(dto.numero());
-        esistente.setCliente(cliente);
-        esistente.setStatoFattura(statoFattura);
+        if (dto.importo() == null || dto.importo().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("L'importo deve essere positivo");
+        }
 
-        return fatturaRepository.save(esistente);
 
+        Cliente cliente = clienteRepository.findById(dto.cliente().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente non trovato con id: " + dto.cliente().getId()));
+
+
+        StatoFattura stato = statoFatturaRepository.findById(dto.statoFattura().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Stato fattura non trovato con id: " + dto.statoFattura().getId()));
+
+
+        existing.setCliente(cliente);
+        existing.setStatoFattura(stato);
+        existing.setData(dto.data());
+        existing.setImporto(dto.importo());
+
+        return fatturaRepository.save(existing);
     }
 
-    public void delete(UUID id) {
+    public void delete(Long id) {
         Fattura f = findById(id);
         fatturaRepository.delete(f);
     }
 
-    public Page<Fattura> findAllFiltered(Long clienteId, UUID statoId, LocalDate data, Integer anno, BigDecimal importoMin, BigDecimal importoMax, int page, int size, String sortBy) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy).descending());
-        Specification<Fattura> spec = FatturaSpecification.byFilters(clienteId, statoId, data, anno, importoMin, importoMax);
-        return fatturaRepository.findAll(spec, pageable);
+
+    public Page<Fattura> getAllFatture(int page, int size, String sortBy, String direction) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        Sort sort = direction.equalsIgnoreCase("desc")
+                ? Sort.by(sortBy).descending()
+                : Sort.by(sortBy).ascending();
+
+        pageable = PageRequest.of(page, size, sort);
+        return fatturaRepository.findAll(pageable);
+    }
+
+
+    public Page<Fattura> getFattureByCliente(Long clienteId, int page, int size) {
+        return fatturaRepository.findByCliente_Id(clienteId, PageRequest.of(page, size));
+    }
+
+
+    public Page<Fattura> getFattureByStatoId(long statoId, int page, int size) {
+        return fatturaRepository.findByStatoFattura_Id(statoId, PageRequest.of(page, size));
+    }
+
+    public Page<Fattura> getFattureByData(LocalDate data, int page, int size) {
+        return fatturaRepository.findByData(data, PageRequest.of(page, size));
+    }
+
+
+    public Page<Fattura> getFattureByAnno(int anno, int page, int size) {
+        LocalDate from = LocalDate.of(anno, 1, 1);
+        LocalDate to   = LocalDate.of(anno, 12, 31);
+        return fatturaRepository.findByDataBetween(from, to, PageRequest.of(page, size));
+    }
+
+
+    public Page<Fattura> getFattureByImportoRange(BigDecimal min, BigDecimal max, int page, int size) {
+        return fatturaRepository.findByImportoBetween(min, max, PageRequest.of(page, size));
     }
 
 }
