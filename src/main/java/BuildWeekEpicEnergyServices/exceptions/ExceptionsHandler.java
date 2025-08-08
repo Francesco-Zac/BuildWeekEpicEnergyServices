@@ -5,6 +5,7 @@ import BuildWeekEpicEnergyServices.payloads.ErrorsWithListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -41,7 +42,7 @@ public class ExceptionsHandler {
     @ExceptionHandler(AuthorizationDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN) // 403
     public ErrorsDTO handleForbidden(AuthorizationDeniedException ex) {
-        return new ErrorsDTO("Non hai i permessi per loggare!", LocalDateTime.now());
+        return new ErrorsDTO("Non hai i permessi! Non facciamo i furbi", LocalDateTime.now());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -53,10 +54,20 @@ public class ExceptionsHandler {
         );
     }
 
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleBadMethod(HttpMessageNotReadableException ex) {
+        return new ErrorsDTO(
+                "Tipo di metodo non supportato!! Sei sicuro che stai usando quello giusto? Non è che stai a fa una POST invece che una GET? Guarda che ti vedo.",
+                LocalDateTime.now()
+        );
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // 500
     public ErrorsDTO handleServerError(Exception ex) {
         ex.printStackTrace();
-        return new ErrorsDTO("Errore generico! Ci stiamo lavorando", LocalDateTime.now());
+        return new ErrorsDTO("Errore generico! Ci lavoreremo, prima o poi...", LocalDateTime.now());
     }
 }
